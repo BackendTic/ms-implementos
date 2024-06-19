@@ -18,5 +18,4 @@ model Implemento{
   descripcion String
   disponible Boolean @default(true)
   estado Boolean @default(true)
-
 }
