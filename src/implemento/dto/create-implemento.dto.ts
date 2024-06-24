@@ -1,7 +1,9 @@
-import {IsBoolean, IsNumber, IsOptional, IsString} from 'class-validator'
+import { TipoImplemento } from '@prisma/client'
+import {IsBoolean, IsEnum, IsNumber, IsOptional, IsString} from 'class-validator'
+import { TipoImplementoList } from 'src/enum/implementos.enum'
 export class CreateImplementoDto {
     @IsString()
-    descripcion: string
+    nombre: string
 
     @IsOptional()
     @IsBoolean()
@@ -10,4 +12,13 @@ export class CreateImplementoDto {
     @IsOptional()
     @IsBoolean()
     estado?: boolean = true
+
+    @IsEnum(TipoImplementoList, {
+        message: `El implemento debe pertenecer a: ${TipoImplementoList}`
+    })
+    disciplina: TipoImplemento
+
+    @IsOptional()
+    imagen: string
+
 }

@@ -20,7 +20,9 @@ export class ImplementoService extends PrismaClient implements OnModuleInit{
   }
 
   findAll() {
-    return this.implemento.findMany({});
+    return this.implemento.findMany({
+      where:{estado: true}
+    });
   }
 
   findOne(id: string) {
