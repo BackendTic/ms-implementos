@@ -1,4 +1,4 @@
-import { Controller, ParseUUIDPipe } from '@nestjs/common';
+import { BadRequestException, Controller, InternalServerErrorException, NotFoundException, ParseUUIDPipe, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ImplementoService } from './implemento.service';
 import { CreateImplementoDto } from './dto/create-implemento.dto';
@@ -10,7 +10,13 @@ export class ImplementoController {
 
   @MessagePattern('createImplemento')
   create(@Payload() createImplementoDto: CreateImplementoDto) {
-    return this.implementoService.create(createImplementoDto);
+    try {
+      console.log(createImplementoDto);
+      
+      return this.implementoService.create(createImplementoDto);
+    } catch (error) {
+      throw new BadRequestException(error.message)
+    }
     
   }
 
@@ -20,9 +26,13 @@ export class ImplementoController {
   }
 
   @MessagePattern('findOneImplemento')
-  findOne(id: string) {
-    return this.implementoService.findOne(id);
+  async findOne(id: string) {
+  try {
+    return await this.implementoService.findOne(id);
+  } catch (error) {
+    throw new InternalServerErrorException(error.message); 
   }
+}
 
   @MessagePattern('updateImplemento')
   update(@Payload() updateImplementoDto: UpdateImplementoDto) {

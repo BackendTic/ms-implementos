@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { CreateImplementoDto } from './dto/create-implemento.dto';
 import { UpdateImplementoDto } from './dto/update-implemento.dto';
 import { PrismaClient } from '@prisma/client';
@@ -25,10 +25,11 @@ export class ImplementoService extends PrismaClient implements OnModuleInit{
     });
   }
 
-  findOne(id: string) {
-    return this.implemento.findUnique({
-      where: { id },
+  async findOne(id: string) {
+    const implemento = await this.implemento.findUnique({
+      where: { id, estado:true  },
     });
+    return implemento
   }
 
   update(id: string, updateImplementoDto: UpdateImplementoDto) {
@@ -40,10 +41,12 @@ export class ImplementoService extends PrismaClient implements OnModuleInit{
 
  remove(id: string) {
   return this.implemento.update({
-    where: { id },
+    where: { id},
     data: {
       estado:false
     },
   });
+
+  
   }
 }

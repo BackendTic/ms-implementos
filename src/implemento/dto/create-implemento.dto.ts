@@ -19,6 +19,6 @@ export class CreateImplementoDto {
     disciplina: TipoImplemento
 
     @IsOptional()
-    imagen: string
+    imagen: any
 
 }
