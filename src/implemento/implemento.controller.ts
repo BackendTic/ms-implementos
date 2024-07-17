@@ -3,6 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ImplementoService } from './implemento.service';
 import { CreateImplementoDto } from './dto/create-implemento.dto';
 import { UpdateImplementoDto } from './dto/update-implemento.dto';
+import { TipoImplemento } from '@prisma/client';
 
 @Controller()
 export class ImplementoController {
@@ -32,7 +33,12 @@ export class ImplementoController {
   } catch (error) {
     throw new InternalServerErrorException(error.message); 
   }
-}
+  }
+
+  @MessagePattern('findImplementsDiscipline')
+  findSpacesDiscipline(disciplina: TipoImplemento) {
+    return this.implementoService.findImplementsDiscipline(disciplina);
+  }
 
   @MessagePattern('updateImplemento')
   update(@Payload() updateImplementoDto: UpdateImplementoDto) {

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { CreateImplementoDto } from './dto/create-implemento.dto';
 import { UpdateImplementoDto } from './dto/update-implemento.dto';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, TipoImplemento } from '@prisma/client';
 
 @Injectable()
 export class ImplementoService extends PrismaClient implements OnModuleInit{
@@ -46,7 +46,11 @@ export class ImplementoService extends PrismaClient implements OnModuleInit{
       estado:false
     },
   });
+  }
 
-  
+  findImplementsDiscipline(Disciplina: TipoImplemento) {
+    return this.implemento.findMany({
+      where:{disciplina: Disciplina, estado:true}
+    });
   }
 }

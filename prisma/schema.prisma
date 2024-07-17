@@ -18,7 +18,9 @@ enum TipoImplemento{
   BASKET
   VOLEY
   TENNIS
-  PING_PONG
+  FUTBOL_SALA
+  OTROS
+  ATLETISMO
 }
 
 model Implemento{
